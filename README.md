@@ -26,16 +26,4 @@ This project demonstrates clean architecture, CRUD operations, RESTful API integ
 
 ---
 
-##  Project Structure
-todo-application/
-│
-├── ToDosBackend/ # C# .NET backend
-│ ├── ToDosAdminSystem.API/ # API controllers, startup
-│ ├── ToDosAdminSystem.Core/ # Entities, interfaces
-│ ├── ToDosAdminSystem.Infrastructure/ # EF Core, DB context
-│ └── ToDosAdminSystem.sln # Visual Studio solution
-│
-└── ToDosSystemAngular/ # Angular frontend
-├── src/
-├── package.json
-└── angular.json
+
