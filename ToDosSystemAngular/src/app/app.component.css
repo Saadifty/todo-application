@@ -1,0 +1,88 @@
+/* General container for the whole application */
+body {
+  margin: 0;
+}
+
+.container {
+  max-width: 1400px; 
+  margin: 0 auto; 
+  padding: 20px; 
+  box-sizing: border-box; 
+}
+
+/* Align the logout button to the right */
+.logout-container {
+  display: flex;
+  justify-content: flex-end;
+  margin: 20px;
+}
+
+.logout-button {
+  background-color: #eeeeee;
+  color: rgb(0, 0, 0);
+  font-size: 16px;
+  font-weight: bold;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Hover effect */
+.logout-button:hover {
+  background-color: #c5c5c5;
+}
+
+/* Pomodoro */
+.rounded-button {
+  border-radius: 20px;
+  padding: 8px 24px;
+  font-size: 16px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pomodoro-fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  z-index: 1000;
+}
+
+.pomodoro-fullscreen h1 {
+  font-size: 5rem;
+  margin: 0;
+}
+
+.pomodoro-fullscreen button {
+  margin-top: 50px;
+  padding: 10px 20px;
+  font-size: 1.5rem;
+  background: white;
+  color: #333;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.green {
+  background-color: #4caf50;
+}
+
+.yellow {
+  background-color: #ffc107;
+}
+
+.red {
+  background-color: #f44336;
+}

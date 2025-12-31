@@ -1,0 +1,62 @@
+<div class="register-container">
+  <h2>To Do List Register</h2>
+  <form (ngSubmit)="register()" class="form-container" #registerForm="ngForm">
+    <!-- Username field -->
+    <mat-form-field appearance="fill">
+      <mat-label>Username</mat-label>
+      <input matInput 
+             [(ngModel)]="username" 
+             name="username" 
+             required 
+             #usernameInput="ngModel" 
+             placeholder="Enter your username" />
+      <mat-error *ngIf="usernameInput.invalid && usernameInput.touched">
+        Username is required.
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Email Field -->
+    <mat-form-field appearance="fill">
+      <mat-label>Email</mat-label>
+      <input matInput 
+             type="email" 
+             [(ngModel)]="email" 
+             name="email" 
+             required 
+             email 
+             #emailInput="ngModel" 
+             placeholder="Enter your email" />
+      <mat-error *ngIf="emailInput.invalid && emailInput.touched">
+        <div *ngIf="emailInput.errors?.['required']">Email is required.</div>
+        <div *ngIf="emailInput.errors?.['email']">Please enter a valid email address.</div>
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Password Field -->
+    <mat-form-field appearance="fill">
+      <mat-label>Password</mat-label>
+      <input matInput 
+             type="password" 
+             [(ngModel)]="password" 
+             name="password" 
+             required 
+             minlength="6" 
+             #passwordInput="ngModel" 
+             placeholder="Enter your password" />
+      <mat-error *ngIf="passwordInput.invalid && passwordInput.touched">
+        <div *ngIf="passwordInput.errors?.['required']">Password is required.</div>
+        <div *ngIf="passwordInput.errors?.['minlength']">Password must be at least 6 characters long.</div>
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Button Container inside the form -->
+    <div class="button-container">
+      <button mat-raised-button color="warn" type="button" (click)="cancel()">Cancel</button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="registerForm.invalid">Register</button>
+    </div>
+  </form>
+
+  <!-- Error and Success message display -->
+  <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+  <div *ngIf="successMessage" class="success">{{ successMessage }}</div>
+</div>

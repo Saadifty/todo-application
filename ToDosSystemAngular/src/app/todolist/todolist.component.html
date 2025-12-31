@@ -1,0 +1,18 @@
+<div class="todo-list-container">
+  <h2>{{ userName }}'s To-Do List</h2>
+
+  <!-- Grid container for todos -->
+  <div class="todo-grid">
+    <app-todo
+      *ngFor="let todo of todos"
+      [todo]="todo"
+      (updated)="getTodos()"
+      (deleted)="getTodos()">
+    </app-todo>
+  </div>
+
+  <!-- Floating action button for adding a new todo -->
+  <button mat-fab color="primary" (click)="openAddDialog()" class="add-todo-button" aria-label="Add New Todo">
+    <mat-icon>add</mat-icon>
+  </button>
+</div>

@@ -1,0 +1,24 @@
+# OS junk
+.DS_Store
+Thumbs.db
+__MACOSX/
+
+# Node / Angular
+node_modules/
+dist/
+.angular/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# .NET / Visual Studio
+**/bin/
+**/obj/
+.vs/
+*.user
+*.suo
+TestResults/
+
+# Env / secrets (recommended)
+.env
+.env.*

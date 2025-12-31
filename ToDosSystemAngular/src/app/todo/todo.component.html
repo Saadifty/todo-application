@@ -1,0 +1,38 @@
+<mat-card class="todo-card">
+  <div class="complete-container">
+    <!-- Checkbox to mark the todo as completed -->
+    <mat-checkbox
+      [checked]="todo.is_completed"
+      (change)="toggleCompletion()"
+      aria-label="Mark Todo as Completed"
+    >
+    </mat-checkbox>
+  </div>
+
+  <mat-card-header>
+    <div>
+      <mat-card-title [class.completed]="todo.is_completed">
+        {{ todo.title }}
+      </mat-card-title>
+      <mat-card-subtitle [class.completed]="todo.is_completed">
+        Priority: {{ todo.priority }}
+      </mat-card-subtitle>
+    </div>
+  </mat-card-header>
+
+  <mat-card-content>
+    <p [class.completed]="todo.is_completed">{{ todo.description }}</p>
+  </mat-card-content>
+
+  <mat-card-actions>
+    <!-- Edit button -->
+    <button mat-icon-button color="primary" (click)="openEditDialog()">
+      <mat-icon>edit</mat-icon>
+    </button>
+
+    <!-- Delete button -->
+    <button mat-icon-button color="warn" (click)="deleteTodo()">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </mat-card-actions>
+</mat-card>

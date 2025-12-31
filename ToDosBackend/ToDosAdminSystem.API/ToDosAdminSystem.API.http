@@ -1,0 +1,6 @@
+@ToDosAdminSystem.API_HostAddress = http://localhost:5269
+
+GET {{ToDosAdminSystem.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

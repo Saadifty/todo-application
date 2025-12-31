@@ -1,0 +1,26 @@
+<h2 mat-dialog-title>Add New Todo</h2>
+<mat-dialog-content>
+  <mat-form-field appearance="fill">
+    <mat-label>Title</mat-label>
+    <input matInput [(ngModel)]="newTodo.title" required />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Description</mat-label>
+    <textarea matInput [(ngModel)]="newTodo.description"></textarea>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Priority</mat-label>
+    <mat-select [(ngModel)]="newTodo.priority">
+      <mat-option value="low">Low</mat-option>
+      <mat-option value="medium">Medium</mat-option>
+      <mat-option value="high">High</mat-option>
+    </mat-select>
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="cancel()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="saveTodo()">Create</button>
+</mat-dialog-actions>

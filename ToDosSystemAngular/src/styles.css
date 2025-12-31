@@ -1,0 +1,24 @@
+/* Import Montserrat from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+
+body, html {
+  font-family: 'Montserrat', sans-serif;
+  background-color: #f8f9fa;
+  color: #333;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center; /* Centers content horizontally */
+  height: 100vh; /* Ensures the height applies uniformly */
+}
+
+h1 {
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Optional: Ensure Montserrat consistency in buttons, inputs, etc. */
+button, input, textarea, select {
+  font-family: 'Montserrat', sans-serif;
+}

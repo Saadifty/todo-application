@@ -1,0 +1,30 @@
+<div class="container">
+  <nav>
+    <div class="logout-container">
+      <!-- Logout button shown only if user is logged in -->
+      <button *ngIf="showLogoutButton" (click)="logout()" class="logout-button">
+        Logout
+      </button>
+    </div>
+  </nav>
+  <!-- Show Pomodoro features only when logged in -->
+  <div *ngIf="showPomodoro">
+    <!-- Fullscreen Pomodoro View -->
+    <div
+      *ngIf="isPomodoroFullscreen"
+      #fullscreenContainer
+      class="pomodoro-fullscreen"
+      [ngClass]="timerColor"
+    >
+      <h1>{{ formattedTime }}</h1>
+      <button (click)="stopPomodoro()">Stop</button>
+    </div>
+    <!-- Start Pomodoro Button -->
+    <button mat-raised-button color="warn" class="rounded-button" (click)="startPomodoro()">
+      <mat-icon>timer</mat-icon>
+      Start Pomodoro
+    </button>
+  </div>
+
+  <router-outlet></router-outlet>
+</div>
