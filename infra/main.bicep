@@ -3,8 +3,11 @@ targetScope = 'resourceGroup'
 @description('Project prefix used for resource naming (must be globally unique for some resources).')
 param prefix string = 'todo-saad'
 
-@description('Azure location for all resources. Keep it the same as the Resource Group location.')
+@description('Azure location for most resources (defaults to the Resource Group location).')
 param location string = resourceGroup().location
+
+@description('Location for PostgreSQL Flexible Server (use a region your subscription allows).')
+param pgLocation string = 'northeurope'
 
 @description('PostgreSQL admin username (cannot be "postgres").')
 param pgAdminUser string = 'pgadmin'
@@ -70,7 +73,7 @@ resource webApp 'Microsoft.Web/sites@2023-12-01' = {
 
 resource pg 'Microsoft.DBforPostgreSQL/flexibleServers@2023-06-01-preview' = {
   name: pgServerName
-  location: location
+  location: pgLocation
   sku: {
     name: pgSkuName
     tier: 'Burstable'
@@ -99,7 +102,7 @@ resource pg 'Microsoft.DBforPostgreSQL/flexibleServers@2023-06-01-preview' = {
   }
 }
 
-// Allow Azure services to access the server (needed for App Service -> PG in many setups)
+// Allow Azure services to access the server (helps App Service reach PG)
 resource allowAzureServices 'Microsoft.DBforPostgreSQL/flexibleServers/firewallRules@2023-06-01-preview' = {
   name: 'AllowAzureServices'
   parent: pg
@@ -124,3 +127,4 @@ output webAppName string = webApp.name
 output webAppHostName string = webApp.properties.defaultHostName
 output pgServerName string = pg.name
 output pgDatabaseName string = pgDatabaseName
+output pgLocationOut string = pgLocation
