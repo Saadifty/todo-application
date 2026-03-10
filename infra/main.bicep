@@ -49,12 +49,16 @@ resource webApp 'Microsoft.Web/sites@2023-12-01' = {
     serverFarmId: plan.id
     siteConfig: {
       linuxFxVersion: 'DOTNETCORE|8.0'
-      appSettings: [
-        // We'll fill the real DB connection string after Postgres exists
-        { name: 'ASPNETCORE_ENVIRONMENT'; value: 'Production' }
-        { name: 'WEBSITES_PORT'; value: '8080' }
-      ]
-    }
+     appSettings: [
+  {
+    name: 'ASPNETCORE_ENVIRONMENT'
+    value: 'Production'
+  }
+  {
+    name: 'WEBSITES_PORT'
+    value: '8080'
+  }
+]
     httpsOnly: true
   }
 }
