@@ -54,7 +54,14 @@ app.MapGet("/config-check", (IConfiguration config) =>
 
 app.MapGet("/health", () => Results.Ok("ok"));
 
+app.MapGet("/config-check", (IConfiguration cfg) =>
+{
+    var cs = cfg.GetConnectionString("AppProgDb");
+    return Results.Ok(new { hasConnectionString = !string.IsNullOrWhiteSpace(cs) });
+});
+
 app.Run();
+
 
 
 
