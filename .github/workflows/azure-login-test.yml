@@ -28,7 +28,7 @@ jobs:
       - name: Deploy Bicep to rg-todo-dev
         run: |
           az deployment group create \
-            --resource-group rg-todo-dev \
+            --resource-group rg-todo-we-dev \
             --name todo-infra \
             --template-file infra/main.bicep \
             --parameters infra/main.parameters.json \
