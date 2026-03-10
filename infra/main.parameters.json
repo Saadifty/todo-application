@@ -3,6 +3,8 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "prefix": { "value": "todo-saad" },
+    "location": { "value": "westeurope" },
+    "pgLocation": { "value": "northeurope" },
     "pgAdminUser": { "value": "pgadmin" },
     "pgDatabaseName": { "value": "todosdb" }
   }
