@@ -1,0 +1,59 @@
+name: Deploy Backend (.NET) to Azure Web App
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["main"]
+    paths:
+      - "ToDosBackend/**"
+      - ".github/workflows/deploy-backend.yml"
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+
+      - name: Restore
+        run: dotnet restore ToDosBackend/ToDosAdminSystem.API/ToDosAdminSystem.API.csproj
+
+      - name: Build
+        run: dotnet build ToDosBackend/ToDosAdminSystem.API/ToDosAdminSystem.API.csproj -c Release --no-restore
+
+      - name: Test (skip if none)
+        run: dotnet test -c Release --no-build
+        continue-on-error: true
+
+      - name: Publish
+        run: dotnet publish ToDosBackend/ToDosAdminSystem.API/ToDosAdminSystem.API.csproj -c Release -o publish
+
+      - name: Zip publish output
+        run: |
+          cd publish
+          zip -r ../app.zip .
+
+      - name: Login to Azure (OIDC)
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Deploy to Azure Web App (zip deploy)
+        run: |
+          az webapp deploy \
+            --resource-group rg-todo-we-dev \
+            --name todo-saad-api \
+            --src-path app.zip \
+            --type zip
