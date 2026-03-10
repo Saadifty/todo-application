@@ -1,0 +1,35 @@
+name: Deploy Azure Infrastructure (Bicep)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "main" ]
+    paths:
+      - "infra/**"
+      - ".github/workflows/infra.yml"
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Login to Azure (OIDC)
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Deploy Bicep to rg-todo-dev
+        run: |
+          az deployment group create \
+            --resource-group rg-todo-dev \
+            --name todo-infra \
+            --template-file infra/main.bicep \
+            --parameters infra/main.parameters.json \
+            --parameters pgAdminPassword='${{ secrets.PG_ADMIN_PASSWORD }}'
