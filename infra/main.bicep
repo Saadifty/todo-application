@@ -24,7 +24,7 @@ param appServiceSku string = 'B1'
 
 var appServicePlanName = 'asp-${prefix}'
 var webAppName = '${prefix}-api'
-var pgServerName = '${prefix}-pg'
+var pgServerName = '${prefix}-pg-ne'
 
 var pgVersion = '16'
 var pgSkuName = 'Standard_B1ms'
