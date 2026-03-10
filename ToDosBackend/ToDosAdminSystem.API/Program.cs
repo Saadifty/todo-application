@@ -52,6 +52,9 @@ app.MapGet("/config-check", (IConfiguration config) =>
     return Results.Ok(new { hasConnectionString = !string.IsNullOrWhiteSpace(cs) });
 });
 
+app.MapGet("/health", () => Results.Ok("ok"));
+
 app.Run();
+
 
 
