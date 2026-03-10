@@ -46,5 +46,12 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+app.MapGet("/config-check", (IConfiguration config) =>
+{
+    var cs = config.GetConnectionString("AppProgDb");
+    return Results.Ok(new { hasConnectionString = !string.IsNullOrWhiteSpace(cs) });
+});
+
 app.Run();
+
 
