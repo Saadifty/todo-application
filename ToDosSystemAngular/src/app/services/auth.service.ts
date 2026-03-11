@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
   providedIn: 'root',
 })
 export class AuthService {
-  baseURL: string = "https://todo-saad-api.azurewebsites.net/api";
+  baseUrl: string = "https://todo-saad-api.azurewebsites.net/api";
 
   // Observable to track the login state
   private isLoggedInSubject: BehaviorSubject<boolean>;
@@ -72,3 +72,4 @@ export class AuthService {
   }
 
 }
+
