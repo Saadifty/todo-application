@@ -20,7 +20,7 @@ export class TodoService {
   
     // Fetch all todos by userId
     getTodos(userId: number): Observable<Todo[]> {
-      const apiUrl = `${this.baseURL}/todo?userId=${this.userId}`;
+      const apiUrl = `${this.baseUrl}/todo?userId=${this.userId}`;
       return this.http.get<Todo[]>(apiUrl, {
         headers: { Authorization: this.authHeader },
       });
