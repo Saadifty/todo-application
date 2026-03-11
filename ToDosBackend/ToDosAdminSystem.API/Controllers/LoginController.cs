@@ -13,7 +13,6 @@ namespace ToDosAdminSystem.API.Controllers
 
         public LoginController(IConfiguration configuration)
         {
-            // Retrieve the database connection string from configuration
             _connectionString = configuration.GetConnectionString("AppProgDb");
         }
 
@@ -21,52 +20,41 @@ namespace ToDosAdminSystem.API.Controllers
         [HttpPost]
         public ActionResult Login([FromBody] Login credentials)
         {
-            // Validate user and fetch user_id
             var userId = GetUserId(credentials.Username, credentials.Password);
 
             if (userId != null)
             {
-                // // Generate Basic Auth header
-                // var text = $"{credentials.Username}:{credentials.Password}";
-                // var bytes = System.Text.Encoding.Default.GetBytes(text);
-                // var encodedCredentials = Convert.ToBase64String(bytes);
-                // var headerValue = $"Basic {encodedCredentials}";
-
-                // Use AuthenticationHelper to handle the encoding/encryption
                 var headerValue = AuthenticationHelper.Encrypt(credentials.Username, credentials.Password);
 
-
-                return Ok(new 
+                return Ok(new
                 {
                     message = "Login Successfully",
-                    userId = userId,          // Return user_id in the response
-                    headerValue = headerValue // Return Basic Auth header
+                    userId = userId,
+                    headerValue = headerValue
                 });
             }
-            else
-            {
-                return Unauthorized("Invalid username or password");
-            }
+
+            return Unauthorized("Invalid username or password");
         }
 
-        private int? GetUserId(string username, string password)
+        private long? GetUserId(string username, string password)
         {
             using (var connection = new NpgsqlConnection(_connectionString))
             {
                 connection.Open();
 
-                // Query the database to retrieve the user_id for the username/password
                 var command = new NpgsqlCommand(
-                    "SELECT id FROM users WHERE username = @username AND password_hash = @password",
+                    "SELECT id FROM public.users WHERE username = @username AND password_hash = @password",
                     connection
                 );
+
                 command.Parameters.AddWithValue("username", username);
                 command.Parameters.AddWithValue("password", password);
 
                 var result = command.ExecuteScalar();
 
-                // If a match is found, return the user_id; otherwise, return null
-                return result == null ? (int?)null : (int)result;
+                // BIGSERIAL => Int64
+                return result == null ? (long?)null : Convert.ToInt64(result);
             }
         }
     }
