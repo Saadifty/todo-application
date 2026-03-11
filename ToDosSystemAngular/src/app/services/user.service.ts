@@ -7,7 +7,7 @@ import { User } from '../model/user';
   providedIn: 'root',
 })
 export class UserService {
-  baseUrl: string = 'http://localhost:5269/api';
+  baseURL: string = "https://todo-saad-api.azurewebsites.net/api";
 
   constructor(private http: HttpClient) {}
 
