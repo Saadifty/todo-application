@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
   providedIn: 'root',
 })
 export class AuthService {
-  baseUrl: string = 'http://localhost:5269/api';
+  baseURL: string = "https://todo-saad-api.azurewebsites.net/api";
 
   // Observable to track the login state
   private isLoggedInSubject: BehaviorSubject<boolean>;
@@ -70,4 +70,5 @@ export class AuthService {
     // Redirect to login page
     this.router.navigate(['/login']);
   }
+
 }
