@@ -1,29 +1,68 @@
-# ToDo Application
+# Todo Application (Full Stack)
 
-A full-stack ToDo management system built with **Angular**, **.NET 8 Web API**, and **PostgreSQL**.  
-This project demonstrates clean architecture, CRUD operations, RESTful API integration, and a responsive UI.
+Full-stack Todo application built with **Angular** (frontend) and **ASP.NET Core (.NET 8)** (backend) with **PostgreSQL**.
 
----
+## Live Demo
+- **Frontend (Azure Static Web Apps):** https://black-cliff-0808f0403.1.azurestaticapps.net
+- **Backend API (Azure App Service):** https://todo-saad-api.azurewebsites.net
+- **Health Check:** https://todo-saad-api.azurewebsites.net/health
 
-##  Features
-- User-friendly task management interface
-- CRUD operations for ToDos
-- Backend REST API using ASP.NET Core
-- PostgreSQL database integration via Entity Framework Core
-- Separation of concerns (frontend, backend, database)
-- Environment-based configuration
+## Architecture (Azure)
 
----
+- **Frontend:** Angular → **Azure Static Web Apps**
+- **Backend:** ASP.NET Core Web API → **Azure App Service (Linux)**
+- **Database:** **Azure Database for PostgreSQL (Flexible Server)**
+- **Infrastructure as Code:** **Bicep** (in `/infra`)
+- **CI/CD:** **GitHub Actions**
+  - Deploy infra (Bicep)
+  - Deploy backend (zip deploy to App Service)
+  - Deploy frontend (Static Web Apps workflow)
 
-##  Tech Stack
-| Layer | Technology |
-|-------|-------------|
-| Frontend | Angular 17 |
-| Backend | ASP.NET Core 8 |
-| Database | PostgreSQL |
-| ORM | Entity Framework Core |
-| Tools | Visual Studio / VS Code, Postman, Git |
+### High-level diagram
 
----
+Frontend (SWA)  →  Backend API (App Service)  →  PostgreSQL (Flexible Server)
 
 
+## Run Locally
+
+### Backend (.NET API)
+1. Open `ToDosBackend/` in your IDE
+2. Update the connection string in `appsettings.json` (or use environment variables)
+3. Run the API
+
+### Frontend (Angular)
+1. `cd ToDosSystemAngular`
+2. `npm install`
+3. `ng serve`
+4. Open: `http://localhost:4200`
+
+> Note: In production, services point to the Azure API URL.
+
+## Deployment (Azure + IaC + CI/CD)
+
+This project is deployed on Azure using **Infrastructure as Code (Bicep)** and **GitHub Actions CI/CD**.
+
+### Infrastructure (Bicep)
+- Folder: `/infra`
+- Provisions:
+  - App Service Plan + Web App (`todo-saad-api`)
+  - Azure PostgreSQL Flexible Server + DB
+  - Firewall rule allowing Azure services
+  - (Frontend is deployed via Static Web Apps GitHub integration)
+
+### CI/CD (GitHub Actions)
+- Backend deployment pipeline builds & publishes .NET, then deploys to Azure App Service.
+- Frontend pipeline builds Angular and deploys to Azure Static Web Apps.
+
+### Key environment variables (Azure App Service)
+- `ConnectionStrings__AppProgDb` → PostgreSQL connection string
+- `AllowedOrigins__0` → Static Web App URL (CORS allow-list)
+
+## Troubleshooting
+
+### CORS errors
+Ensure the backend allows the frontend origin:
+- Set `AllowedOrigins__0` in Azure App Service to your Static Web App URL
+
+### Database errors
+If you see errors like `relation "todos" does not exist`, ensure the required tables exist in PostgreSQL.
