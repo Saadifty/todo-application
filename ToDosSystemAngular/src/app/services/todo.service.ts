@@ -28,28 +28,28 @@ export class TodoService {
   
    // Fetch a single todo by ID
    getTodo(id: number): Observable<Todo> {
-    const apiUrl = `${this.baseURL}/todo/${id}`;
+    const apiUrl = `${this.baseUrl}/todo/${id}`;
     return this.http.get<Todo>(apiUrl, { headers: { Authorization: this.authHeader},
   });
   }
 
   // Create a new todo
   createTodo(todo: Todo): Observable<any> {
-    const apiUrl = `${this.baseURL}/todo`;
+    const apiUrl = `${this.baseUrl}/todo`;
     return this.http.post(apiUrl, todo, { headers: { Authorization: this.authHeader},
     });
     }
 
   // Delete a todo by ID
   deleteTodo(id: number): Observable<any> {
-    const apiUrl = `${this.baseURL}/todo/${id}`;
+    const apiUrl = `${this.baseUrl}/todo/${id}`;
     return this.http.delete(apiUrl, { headers: { Authorization: this.authHeader},
     });
     }
 
   // Edit an existing todo
   editTodo(todo: Todo): Observable<Todo> {
-    const apiUrl = `${this.baseURL}/todo`;
+    const apiUrl = `${this.baseUrl}/todo`;
     return this.http.put<Todo>(apiUrl, todo, { headers: { Authorization: this.authHeader},
     });
     }
