@@ -22,6 +22,13 @@ namespace ToDosAdminSystem.API.Middleware
 
         public async Task InvokeAsync(HttpContext context)
         {
+            // IMPORTANT: allow CORS preflight requests through (they usually have no Authorization header)
+            if (HttpMethods.IsOptions(context.Request.Method))
+            {
+                await _next(context);
+                return;
+            }
+
             // 1) Allow anonymous endpoints by attribute
             if (context.GetEndpoint()?.Metadata.GetMetadata<IAllowAnonymous>() != null)
             {
@@ -50,7 +57,7 @@ namespace ToDosAdminSystem.API.Middleware
                 return;
             }
 
-            // 4) Decode credentials (your helper)
+            // 4) Decode credentials
             AuthenticationHelper.Decrypt(authHeader, out string username, out string password);
 
             if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
@@ -63,10 +70,8 @@ namespace ToDosAdminSystem.API.Middleware
 
             // 5) Validate against database using configured connection string
             var connectionString = _configuration.GetConnectionString("AppProgDb");
-
             if (string.IsNullOrWhiteSpace(connectionString))
             {
-                // Misconfiguration is a server error, not an auth error
                 context.Response.StatusCode = StatusCodes.Status500InternalServerError;
                 await context.Response.WriteAsync("Database connection string is not configured.");
                 return;
@@ -93,7 +98,7 @@ namespace ToDosAdminSystem.API.Middleware
                 await connection.OpenAsync();
 
                 await using var command = new NpgsqlCommand(
-                    "SELECT COUNT(*) FROM users WHERE username = @username AND password_hash = @password",
+                    "SELECT COUNT(*) FROM public.users WHERE username = @username AND password_hash = @password",
                     connection);
 
                 command.Parameters.AddWithValue("username", username);
@@ -106,7 +111,6 @@ namespace ToDosAdminSystem.API.Middleware
             }
             catch
             {
-                // If DB is down/misconfigured, treat as not valid (or you can return 500)
                 return false;
             }
         }
