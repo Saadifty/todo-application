@@ -13,12 +13,15 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Add CORS policy to allow requests from Angular frontend
+// CORS: allow local dev + deployed frontend(s) via config
+var allowedOrigins = builder.Configuration.GetSection("AllowedOrigins").Get<string[]>()
+                    ?? new[] { "http://localhost:4200" };
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAngularApp", policy =>
     {
-        policy.WithOrigins("http://localhost:4200") // Angular frontend URL
+        policy.WithOrigins(allowedOrigins)
               .AllowAnyMethod()
               .AllowAnyHeader();
     });
@@ -56,6 +59,7 @@ app.MapGet("/config-check", (IConfiguration cfg) =>
 });
 
 app.Run();
+
 
 
 
