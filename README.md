@@ -2,10 +2,6 @@
 
 Full-stack Todo application built with **Angular** (frontend) and **ASP.NET Core (.NET 8)** (backend) with **PostgreSQL**.
 
-## Live Demo
-- **Frontend (Azure Static Web Apps):** https://black-cliff-0808f0403.1.azurestaticapps.net
-- **Backend API (Azure App Service):** https://todo-saad-api.azurewebsites.net
-- **Health Check:** https://todo-saad-api.azurewebsites.net/health
 
 ## Architecture (Azure)
 
